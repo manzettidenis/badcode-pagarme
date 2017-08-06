@@ -1,12 +1,10 @@
 'use strict';
 
+const Config = () => {
 
-class Config {
-
-  constructor() {
-      this.configs = {
+  this.configs = {
         database: {
-          user: '',
+          user: 'professorcarvalho',
           passwords: '',
         },
         aplication: {
@@ -14,9 +12,8 @@ class Config {
           port: '',
         }
       }
-  }
 
-  returnConfigs() {
     return this.configs
-  }
 }
+
+module.exports = Config;
