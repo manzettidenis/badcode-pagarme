@@ -3,17 +3,18 @@
 const Config = () => {
 
   this.configs = {
+        logging:false,
         database: {
+          name: 'pokemons',
           user: 'professorcarvalho',
-          passwords: '',
+          password: null,
         },
-        aplication: {
-          ip: '',
-          port: '',
+        application: {
+          ip: 'localhost',
+          port: 3000,
         }
       }
-
     return this.configs
 }
 
-module.exports = Config;
+module.exports = Config();
