@@ -1,0 +1,24 @@
+{
+  "name": "pokemon",
+  "version": "1.0.0",
+  "description": "Example of a really bad code",
+  "main": "index.js",
+  "engines": {
+    "node": ">=7.0.10"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "NODE_ENV=dev nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.15.3",
+    "request": "^2.73.0",
+    "request-promise": "^4.0.0",
+    "sequelize": "^4.4.2",
+    "sqlite3": "^3.1.4"
+  }
+}
