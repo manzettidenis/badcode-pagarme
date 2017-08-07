@@ -43,8 +43,10 @@
 .Squirtle {
   background-position: -180px 0px;
 }
-.Charmander {}
-.Pikachu {}
+.Charmander {
+  background-position: -260px 0px;
+
+}
 
 </style>
 
@@ -55,6 +57,7 @@
         <li class="pokemon Pikachu"></li>
         <li class="pokemon Bulbassaur"></li>
         <li class="pokemon Squirtle"></li>
+        <li class="pokemon Charmander"></li>
     </ul>
 
 </div>

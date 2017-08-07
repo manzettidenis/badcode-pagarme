@@ -47,7 +47,8 @@ PokemonCtrl.buy = (req, res) => {
 					uri: 'https://api.pagar.me/1/transactions',
 					method: 'POST',
 					json: {
-						api_key: "ak_test_WHgSu2XFmvoopAZMetV3LfA2RfEEQg",
+						api_key: "ak_test_jRaznapwnT2lrrr8KhG32blo15JOyW",
+						encryption_key: "ek_test_bKrSQk7gUwOaoNbjIx6MVDE5ktTKyZ",
 						amount: pokemon.price * req.body.quantity,
 						card_number: "4024007138010896",
 						card_expiration_date: "1050",

@@ -30,7 +30,7 @@ const Pokemon = (sequelize, DataTypes) => {
 					isAlphanumeric: true
 				}
 			},
-			skills: {
+			level: {
 				type: DataTypes.INTEGER,
 				defaultValue: 1,
 				validate: {

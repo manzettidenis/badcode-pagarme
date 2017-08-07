@@ -76,24 +76,29 @@
     text-align: center;
     color: #fff;
 }
+
 .list span {
-  font-size: .8rem;
+    font-size: .8rem;
 }
-.list span > span{
-  font-size: 1rem;
-  display: flex;
-  margin-top: 5px;
-  align-items: flex-start;;
-  justify-content: space-between;
-  flex-direction:column;
-  width: auto;
+
+.list span > span {
+    font-size: 1rem;
+    display: flex;
+    margin-top: 5px;
+    align-items: flex-start;
+    ;
+    justify-content: space-between;
+    flex-direction: column;
+    width: auto;
 }
-.list span > span.genre{
-  font: 900 2rem/1rem 'Arial';
+
+.list span > span.genre {
+    font: 900 2rem/1rem 'Arial';
 }
-.list span > span.nickname{
-  font: 100 1rem 'Arial';
-  font-style: italic;
+
+.list span > span.nickname {
+    font: 100 1rem 'Arial';
+    font-style: italic;
 }
 
 .list ul {
@@ -107,10 +112,11 @@
 }
 
 .list ul li {
-  display: flex;
-  flex-direction: row;
-  align-items: center;;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    ;
+    justify-content: space-between;
     padding: 15px 10px;
     font-weight: 900;
     color: #fff;
@@ -131,7 +137,7 @@
     <div class="list">
         <h2>Trainer's Pokemons</h2>
         <ul>
-            <li  v-on:click="someFunction">
+            <li>
                 <span>Pikachu <span class="nickname">Mal de choke</span></span>
                 <span>Genre:<span class="genre">♂</span></span>
                 <span>Level: <span>23</span></span>
@@ -151,14 +157,23 @@
 
 export default {
     name: 'rightScreen',
-    props: ['someFunctionParent'],
-    methods: {
-      someFunction: function() {
-        this.someFunctionParent();
+    methods : {
+      up(arg) {
+        this.$parent.updateTrainerInfo(arg)
+      },
+      data() {
+        return {
+          pokemons: [
+            {
+              name: "Pikachua",
+              nickname: "MataRayo",
+              genre: "male",
+              level: 1,
+              price: 450
+            }
+          ]
+        }
       }
-    },
-    data() {
-        return {}
     }
 }
 

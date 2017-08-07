@@ -4,7 +4,7 @@
 #leftScreen {
     width: 343px;
     height: 402px;
-    background: blue;
+    background: #FFCC00;
     position: absolute;
     left: 82px;
     top: 196px;
@@ -17,28 +17,37 @@
 <template>
 
 <div id="leftScreen">
-  <login></login>
+  <router-view></router-view>
+  <!-- <login></login>
   <home></home>
-  <pokemonDetails></pokemonDetails>
+  <pokemonDetails></pokemonDetails> -->
 </div>
 
 </template>
 
 <script>
 
-import login from './login.vue';
-import home from './home.vue';
-import pokemonDetails from './pokemonDetails.vue';
+import login from './leftScreen/login/login.vue';
+import home from './leftScreen/home.vue';
+import start from './leftScreen/start.vue';
+import pokemonDetails from './leftScreen/pokemonDetails.vue';
 
 export default {
     name: 'leftScreen',
     components: {
+      start,
       login,
       home,
       pokemonDetails
     },
+    methods: {
+        up(arg) {
+          this.$parent.updateTrainerInfo(arg)
+        }
+    },
     data() {
         return {
+
         }
     }
 }

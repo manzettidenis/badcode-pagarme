@@ -33,8 +33,8 @@ body {
     <background></background>
     <div class="playbox">
         <div class="pokedex">
-            <leftScreen></leftScreen>
-            <rightScreen someFunctionParent="someFunction"></rightScreen>
+            <leftScreenComponent id="leftScreen"></leftScreenComponent>
+            <rightScreen doSomethingChild="doSomething"></rightScreen>
         </div>
     </div>
 </div>
@@ -49,19 +49,27 @@ import background from './components/background.vue';
 
 export default {
     name: 'app',
-    methods : {
-     someFunction: function (event) {
-           // `this` inside methods point to the Vue instance
-           alert('Hello !')
-           // `event` is the native DOM event
-           alert(event.target.tagName)
-         }
-       },
+    data() {
+      return {
+        trainer: {}
+      }
+    },
     components: {
-        background,
-        rightScreen,
-        leftScreen
+      background,
+      rightScreen,
+      leftScreen
+    },
+    methods: {
+        pokemonDetails(arg) {
+            // alert('denis lindo');
+            // this.$broadcast('nomeDoEvento', arg)
+        },
+        updateTrainerInfo(arg) {
+          this.trainer = arg;
+          console.log(this.trainer)
+        }
     }
+
 }
 
 </script>
