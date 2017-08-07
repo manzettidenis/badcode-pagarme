@@ -5,9 +5,9 @@ const express = require('express'),
 			path = require('path'),
 			bodyParser = require('body-parser'),
 			Sequelize = require('sequelize'),
-			db = require('./src/database.js'),
-			Config = require('./src/config'),
-			Router = require('./src/routes');
+			db = require('./server/database.js'),
+			Config = require('./server/config'),
+			Router = require('./server/routes');
 
 app.use(bodyParser.json());
 app.use('/', Router);
