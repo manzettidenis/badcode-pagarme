@@ -1,41 +1,21 @@
 <style>
 
 body {
-    font-family: 'Arial';
-}
-
-.playbox {
-    width: 100%;
-    bottom: 0;
-    position: fixed;
-    height: 100%;
-    background: transparent;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.pokedex {
-    width: 1000px;
-    height: 710px;
-    background: url(../src/assets/img/pokedex_dois.png) center center /contain no-repeat;
-    position: relative;
-    display: flex;
+    font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
 }
 
 </style>
 
 <template>
 
-<div id="app">
-    <background></background>
-    <div class="playbox">
-        <div class="pokedex">
-            <leftScreenComponent id="leftScreen"></leftScreenComponent>
-            <rightScreen doSomethingChild="doSomething"></rightScreen>
-        </div>
+<div class="app">
+    <div class="page">
+        <router-view cenario=cenario></router-view>
+        <div class="background"></div>
+    </div>
+    <div class="header">
+        <nav-bar @display="showList"></nav-bar>
     </div>
 </div>
 
@@ -43,33 +23,22 @@ body {
 
 <script>
 
-import rightScreen from './components/rightScreen.vue';
-import leftScreen from './components/leftScreen.vue';
-import background from './components/background.vue';
-
+import NavBar from '@/components/NavBar'
 export default {
-    name: 'app',
     data() {
-      return {
-        trainer: {}
-      }
-    },
-    components: {
-      background,
-      rightScreen,
-      leftScreen
-    },
-    methods: {
-        pokemonDetails(arg) {
-            // alert('denis lindo');
-            // this.$broadcast('nomeDoEvento', arg)
-        },
-        updateTrainerInfo(arg) {
-          this.trainer = arg;
-          console.log(this.trainer)
+        return {
+            cenario: 'firstStep'
         }
     }
-
-}
+    components: {
+            NavBar
+        },
+        methods: {
+            changeCenario(arg) {
+                this.cenario = arg
+                this.$emit('cenarioHasChanged')
+            }
+            name: 'app'
+        }
 
 </script>
