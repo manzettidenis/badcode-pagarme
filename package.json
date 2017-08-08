@@ -2,7 +2,7 @@
   "name": "pokemon",
   "version": "1.0.0",
   "description": "Example of a really bad code",
-  "main": "index.js",
+  "main": "server.js",
   "engines": {
     "node": ">=7.0.10"
   },

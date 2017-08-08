@@ -20,7 +20,7 @@ TrainerCtrl.get = (req, res) => {
 }
 
 TrainerCtrl.create = (req, res) => {
-	console.log('creating')
+	console.log(req.body)
 	db.trainer.create(req.body)
 		.then((trainer) => {
 			console.log(trainer.name + 'was created!')

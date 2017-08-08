@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 const _pokemons = [
   {'id': 1, 'nickname': 'Selvagem', 'genre': 'male', 'name': 'Pikachu', 'price': 450.00, 'stock': 1, 'level': 1},
   {'id': 2, 'nickname': 'Selvagem', 'genre': 'female', 'name': 'Squirtle', 'price': 450.00, 'stock': 1, 'level': 1},
@@ -11,15 +13,15 @@ export default {
   },
 
   buyPokemon (pokemons, cb, errorCb) {
-    this.$http.post('/api', pokemons)
-      .then((data) => {
-        console.log(data)
-      }).catch((err) => {
-        console.log(err)
-      })
+    // this.$http.post('/pokemon/buy', pokemons)
+    //   .then((data) => {
+    //     console.log(data)
+    //   }).catch((err) => {
+    //     console.log(err)
+    //   })
   },
   registerTrainer (trainer, cb, errorCb) {
-    this.$http.post('/api')
+    Vue.http.post('/trainer/create')
       .then((data) => {
         console.log(data)
       }).catch((err) => {

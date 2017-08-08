@@ -5,9 +5,10 @@ import VueResource from 'vue-resource'
 import VueTheMask from 'vue-the-mask'
 import App from './App'
 import router from './router'
+import resource from './resource'
 import store from './store/index'
 import { sync } from 'vuex-router-sync'
-sync(store, router)
+sync(store, router, resource)
 
 Vue.use(VueResource)
 Vue.use(VueTheMask)
@@ -18,6 +19,7 @@ new Vue({
   el: '#app',
   router,
   store,
+  resource,
   template: '<App/>',
   components: { App }
 })

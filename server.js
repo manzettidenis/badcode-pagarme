@@ -1,21 +1,36 @@
 'use strict';
 
 const express = require('express'),
-			app = express(),
-			path = require('path'),
-			bodyParser = require('body-parser'),
-			Sequelize = require('sequelize'),
-			db = require('./server/database.js'),
-			Config = require('./server/config'),
-			Router = require('./server/routes');
+	app = express(),
+	path = require('path'),
+	bodyParser = require('body-parser'),
+	Sequelize = require('sequelize'),
+	db = require('./server/database.js'),
+	Config = require('./server/config'),
+	Router = require('./server/routes')
 
-app.use(bodyParser.json());
-app.use('/', Router);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use((req, res, next) => {
+	const allowedOrigins = ['http://localhost:8080', 'http://127.0.0.1:8080', 'http://127.0.0.1:4000', 'http://localhost:4000'];
+	const origin = req.headers.origin;
+	if (allowedOrigins.indexOf(origin) > -1) {
+		console.log('bateu no cors')
+		res.setHeader('Access-Control-Allow-Origin', origin);
+		res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
+	} else {
+		console.log('bateu no cors 2')
+		res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+	}
+	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+	res.header('Access-Control-Allow-Credentials', true);
 
+	return next();
+});
+app.use(bodyParser.json())
+app.use('/', Router)
+app.use(express.static(path.join(__dirname, 'public')))
 db.sequelize.sync().then(() => {
 	console.log('all models are sync.')
-  app.listen(Config.application.port, () => {
-    console.log('Express listening on port:', Config.application.port);
-  });
+	app.listen(Config.application.port, () => {
+		console.log('Express listening on port:', Config.application.port)
+	});
 });
