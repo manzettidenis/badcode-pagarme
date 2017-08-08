@@ -1,25 +1,23 @@
-// The following line loads the standalone build of Vue instead of the runtime-only build,
-// so you don't have to do: import Vue from 'vue/dist/vue'
-// This is done with the browser options. For the config, see package.json
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import leftScreen from './components/leftScreen.vue';
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import Vue from 'vue'
+import VueResource from 'vue-resource'
+import VueTheMask from 'vue-the-mask'
+import App from './App'
+import router from './router'
+import store from './store/index'
+import { sync } from 'vuex-router-sync'
+sync(store, router)
 
-Vue.use(VueRouter);
+Vue.use(VueResource)
+Vue.use(VueTheMask)
+Vue.config.productionTip = false
 
-// views
-let router = new VueRouter({
-  routes: [
-    { path: '/', component: require("./components/leftScreen/login/login.vue") }
-    // { path: '/contacts', component: require("./contacts.vue") },
-    // { path: '/events', component: require("./events.vue") },
-  ]
-});
-var baserouter = require("./components/leftScreen.vue");
-
+/* eslint-disable no-new */
 new Vue({
-  router: router,
-  render: function (createElement) {
-    return createElement(baserouter);
-  }
-}).$mount("#app");
+  el: '#app',
+  router,
+  store,
+  template: '<App/>',
+  components: { App }
+})

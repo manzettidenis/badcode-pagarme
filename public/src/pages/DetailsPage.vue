@@ -1,10 +1,8 @@
 <template>
   <div class="product-item">
     <router-link to="/" class="back-link">BACK</router-link>
+    <div class="image" v-bind:class="renderPokemon(pokemon)"></div>
     <div class="product-title">{{ pokemon.name }}</div>
-    <div class="image">
-
-    </div>
     <div class="product-details">
       <div class="inventory">In Stock: {{ pokemon.stock }}</div>
       <button class="add-button"
@@ -25,6 +23,7 @@
       ...mapGetters([
         'allPokemons'
       ]),
+
       pokemon () {
         let id = parseInt(this.$route.params.id)
         return this.allPokemons.find((p) => p.id === id) || {}
@@ -34,7 +33,10 @@
       ...mapActions([
         'getAllPokemons',
         'addToCart'
-      ])
+      ]),
+      renderPokemon (pokemon) {
+        return pokemon.name
+      }
     }
   }
 </script>
@@ -52,7 +54,6 @@
 }
 
 .product-title {
-  padding-top: 120px;
   text-align: center;
   margin: 0 auto;
   font-size: 26px;
@@ -72,4 +73,6 @@
   width: 140px;
   height: 50px;
 }
+
+
 </style>

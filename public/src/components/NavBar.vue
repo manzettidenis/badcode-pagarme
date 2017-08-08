@@ -49,8 +49,7 @@ export default {
     ...mapGetters({
       cenario: 'cenarioStatus',
       allPokemons: 'allPokemons'
-    }),
-    ...mapGetters(['allPokemons'])
+    })
   },
   methods: {
     ...mapActions([

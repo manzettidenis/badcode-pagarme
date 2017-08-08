@@ -1,17 +1,17 @@
 'use strict'
 
-const config = require('./config');
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize(
+const config = require('./config'),
+	Sequelize = require('sequelize'),
+ 	sequelize = new Sequelize(
 	config.database.name,
 	config.database.user,
 	config.database.password, {
-	dialect: 'sqlite',
-	storage: './database.sqlite',
-	logging: false
-});
+		dialect: 'sqlite',
+		storage: './database.sqlite',
+		logging: false
+	}),
+	db = {};
 
-const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;

@@ -11,17 +11,19 @@ export default {
   },
 
   buyPokemon (pokemons, cb, errorCb) {
-    // this.$http.post('/api', pokemons).then(() => {
-    //   setTimeout(() => {
-    //         // simulate random checkout failure.
-    //     (Math.random() > 0.5 || navigator.userAgent.indexOf('PhantomJS') > -1)
-    //       ? cb()
-    //       : errorCb()
-    //   }, 100)
-    // })
+    this.$http.post('/api', pokemons)
+      .then((data) => {
+        console.log(data)
+      }).catch((err) => {
+        console.log(err)
+      })
   },
   registerTrainer (trainer, cb, errorCb) {
-    this.$http.post('/api').then(() => {
-    })
+    this.$http.post('/api')
+      .then((data) => {
+        console.log(data)
+      }).catch((err) => {
+        console.log(err)
+      })
   }
 }
