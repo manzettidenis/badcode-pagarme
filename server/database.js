@@ -22,7 +22,7 @@ db.pokemon = require('./models/pokemon.model')(sequelize, Sequelize);
 db.pokedex = require('./models/pokedex.model')(sequelize, Sequelize);
 
 // Relations
-db.trainer.hasOne(db.pokedex);
+db.pokedex.belongsTo(db.trainer)
 db.pokedex.hasMany(db.pokemon);
 
 module.exports = db;

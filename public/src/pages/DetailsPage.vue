@@ -1,5 +1,5 @@
 <template>
-  <div class="product-item">
+  <div :on="this" class="product-item">
     <router-link to="/shop" class="back-link">BACK</router-link>
     <div class="image" v-bind:class="renderPokemon(pokemon)"></div>
     <div class="product-title">{{ pokemon.name }}</div>
@@ -30,7 +30,7 @@
     computed: {
       ...mapGetters({
         trainer: 'trainerData',
-        shopsPokemons: 'shopsPokemons',
+        shops: 'shopsPokemons',
         pokemons: 'myPokemons'
       }),
       pokemon () {
@@ -38,8 +38,15 @@
         if (this.where === 'pokedex') {
           return this.pokemons.find((p) => p.id === id) || {}
         } else {
-          return this.shopsPokemons.find((p) => p.id === id) || {}
+          return this.shops.find((p) => p.id === id) || {}
         }
+      }
+    },
+    watch: {
+        pokemon.name: () => {
+          console.log('watcher')
+        }
+      }
       }
     },
     methods: {
@@ -50,6 +57,9 @@
       renderPokemon (pokemon) {
         return pokemon.name
       },
+      getList () {
+        console.log('entrou no getlist')
+      }
       getOut () {
         this.$router.push('/')
       }

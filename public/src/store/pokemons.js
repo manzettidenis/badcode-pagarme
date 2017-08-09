@@ -5,6 +5,7 @@ const state = {
   count: 0,
   title: 0,
   trainersPokemons: [],
+  details: [],
   shopsPokemons: [
     {'id': 9991, 'nickname': 'Selvagem', 'gender': 'male', 'name': 'Pikachu', 'price': 450.00, 'stock': 10, 'level': 1},
     {'id': 9992, 'nickname': 'Selvagem', 'gender': 'female', 'name': 'Squirtle', 'price': 450.00, 'stock': 4, 'level': 1},
@@ -45,8 +46,8 @@ const actions = {
       })
     })
   },
-  getMyPokemons ({commit, state}, data) {
-
+  getDetailPokemons ({commit, state}, data) {
+    
   }
 }
 
@@ -70,6 +71,10 @@ const getters = {
     return state.trainersPokemons
   },
   shopsPokemons (state, getters, rootState) {
+    return state.shopsPokemons
+  },
+  detailPokemon (state, getters, rootState) {
+
     return state.shopsPokemons
   },
   countPokemons (state, getters, rootState) {

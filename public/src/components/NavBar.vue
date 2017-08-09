@@ -38,9 +38,6 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   mounted () {
-    return {
-      pokemons: []
-    }
   },
   computed: {
     ...mapGetters({
