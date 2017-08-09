@@ -1,21 +1,24 @@
 <template>
 
   <div v-bind:class="{ active: cenario==='playGame'}" id="rightScreen">
+  <!-- <div id="rightScreen" class="active"> -->
       <div class="rightNavbar">
           <ul>
-              <li>Money: $1.000</li>
-              <li>Pokemons: 3</li>
+              <li v-if="count <= 5">"Poke Hick"</li>
+              <li v-if="count > 5 && count <=  15">"Poke Farmer"</li>
+              <li v-if="count > 15">"Poke Tycoon"</li>
+              <li>Pokemons: {{count}}</li>
           </ul>
       </div>
       <div class="list">
-          <h2>Trainer's Pokemons</h2>
-          <ul v-for="p in allPokemons" >
-            <router-link :to="{name: 'details', params: {id: p.id}}" class="title">
+          <h2>{{trainer.nickname}}'s Pokemons</h2>
+          <ul v-for="p in pokemons" >
+            <router-link :to="{name: 'details', params: {where:'pokedex',id: p.id}}" class="title">
               <li>
                   <span>{{p.name}} <span class="nickname">{{p.nickname}}</span></span>
-                  <span>Genre:{{p.genre}}
-                    <span v-if="p.genre==='male'"class="genre">♂</span>
-                    <span v-if="p.genre==='female'"class="genre">♀</span>
+                  <span>gender:
+                    <span v-if="p.gender==='male'"class="gender">♂</span>
+                    <span v-if="p.gender==='female'"class="gender">♀</span>
                   </span>
                   <span>Level: <span>{{p.level}}</span></span>
               </li>
@@ -23,11 +26,8 @@
           </ul>
       </div>
       <div class="controllers">
-        <router-link to="/" class="button buyButton" type="button" name="button">Buy Pokemon</router-link>
-        <router-link to="/" class="button createButton" type="button" name="button">Create Pokemon</router-link>
-      </div>
-      <div class="menu-links">
-        <router-link to="/">Home</router-link>
+        <router-link to="/shop" class="button buyButton" type="button" name="button">Visit Shop</router-link>
+        <router-link to="/create" class="button createButton" type="button" name="button">Create Pokemon</router-link>
       </div>
   </div>
 
@@ -37,25 +37,27 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  data () {
-    return {
-      display: 'false'
-    }
-  },
   mounted () {
-    this.getAllPokemons()
+    return {
+      pokemons: []
+    }
   },
   computed: {
     ...mapGetters({
       cenario: 'cenarioStatus',
-      allPokemons: 'allPokemons'
+      trainer: 'trainerData',
+      count: 'countPokemons',
+      pokemons: 'myPokemons'
     })
   },
   methods: {
     ...mapActions([
-      'getAllPokemons',
-      'changeCenario'
-    ])
+      'getMyPokemons',
+      'changeCenario',
+      'buyPokemon'
+    ]),
+    setTitle () {
+    }
   }
 }
 </script>
@@ -106,10 +108,17 @@ background: #f2963d;
 
 }
 #rightScreen .button.buyButton:active {
-    background: yellow;
+  margin-top: 3px;
+  margin-right: 3px;
+    background:#de7b1b;
+    border-width: 0px 0 2px 2px;
+
 }
 #rightScreen .button.createButton:active {
-    background: yellow;
+    margin-top: 3px;
+    margin-right: 3px;
+      background:#39394d;
+      border-width: 0px 0 2px 2px;
 }
 
 #rightScreen .button {
@@ -190,7 +199,7 @@ a {text-decoration: none;}
     width: auto;
 }
 
-.list span > span.genre {
+.list span > span.gender {
     font: 900 2rem/1rem 'Arial';
 }
 

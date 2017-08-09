@@ -1,6 +1,6 @@
 'use strict';
-
-const request = require('request-promise'),
+const config = require('../config'),
+	request = require('request-promise'),
 	db = require('../database.js'),
 	PokemonCtrl = {};
 
@@ -30,61 +30,51 @@ PokemonCtrl.create = (req, res) => {
 };
 
 PokemonCtrl.buy = (req, res) => {
-	console.log('Buying')
-	db.pokemon.findOne({
-			where: {
-				name: req.body.name
-			}
+  console.log(req.body.card.card_expiration_date)
+  let pokemon = req.body.pokemon;
+  let data = {
+    "api_key": config.application.api_key,
+		"encryption_key": config.application.encryption_key,
+		"amount": pokemon.price * 100,
+		"payment_method": "credit_card",
+		"card_number": req.body.card.card_number,
+		"card_expiration_date": req.body.card.card_expiration_date,
+		"card_holder_name": req.body.card.card_holder_name,
+		"card_cvv": req.body.card.card_cvv
+  }
+	request({
+			uri: 'https://api.pagar.me/1/transactions',
+			method: 'POST',
+			json: true,
+			body: data
 		})
-		.then((pokemon) => {
-			console.log(pokemon.name + ' buying')
-			if (pokemon.stock < req.body.quantity) {
-				return res.status(400).send({
-					error: 'Not enought ' + pokemon.name + ' in stock: ' + pokemon.stock
-				})
-			}
-			request({
-					uri: 'https://api.pagar.me/1/transactions',
-					method: 'POST',
-					json: {
-						api_key: "ak_test_jRaznapwnT2lrrr8KhG32blo15JOyW",
-						encryption_key: "ek_test_bKrSQk7gUwOaoNbjIx6MVDE5ktTKyZ",
-						amount: pokemon.price * req.body.quantity,
-						card_number: "4024007138010896",
-						card_expiration_date: "1050",
-						card_holder_name: "Ash Ketchum",
-						card_cvv: "123",
-						metadata: {
-							product: 'pokemon',
-							name: pokemon.name,
-							quantity: req.body.quantity
-						}
-					}
-				})
-				.then((body) => {
-					console.log(pokemon.name + ' was bought')
-					if (body.status == 'paid') {
-						console.log(pokemon.name + ' payment acepted')
-						pokemon.stock = pokemon.stock - req.body.quantity;
-						pokemon.save()
-							.then((pokemon) => {
-								console.log(pokemon.name + ' sending to your pokedex')
-								res.send(body);
-							})
-					}
-				})
-				.catch((err) => {
-					console.log(err)
-					return res.send(err.message)
-				});
+		.then((body) => {
+			console.log(body.status)
 
+				if (body.status == 'authorized') {
+					console.log(pokemon.name + ' payment authorized')
+					db.pokemon.create(pokemon)
+						.then((poke) => {
+							console.log(poke.name + ' sending to your pokedex')
+              db.pokemon.findAll()
+              .then((pokemons) => {
+                data = {
+                  pokemons: pokemons,
+                  id: pokemon.id
+                }
+                res.send(data);
+              })
+						})
+				} else if (body.status === 'refused') {
+
+        }
 		})
 		.catch((err) => {
-			console.log(err)
+			console.log(err.message)
 			return res.send(err.message)
 		});
+}
 
-};
 
 
 module.exports = PokemonCtrl;

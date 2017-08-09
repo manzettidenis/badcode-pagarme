@@ -1,59 +1,113 @@
 <template>
-
+<div class="shop">
+  <h2>Welcome to Shop</h2>
+  <div class="shoplist">
+      <ul v-for="p in pokemons" >
+        <router-link :to="{name: 'details', params: {where:'shop',id: p.id}}" class="title">
+          <li>
+              <span>{{p.name}} <span class="nickname">{{p.nickname}}</span></span>
+              <span>gender:
+                <span v-if="p.gender==='male'"class="gender">♂</span>
+                <span v-if="p.gender==='female'"class="gender">♀</span>
+              </span>
+              <span>Level: <span>{{p.level}}</span></span>
+              <span>Price: <span>${{p.price}}</span></span>
+              <span>Stock: <span>{{p.stock}}</span></span>
+          </li>
+        </router-link>
+      </ul>
+  </div>
+</div>
 </template>
 
 <script>
   import { mapActions, mapGetters } from 'vuex'
   export default {
+    mounted () {
+      if (this.trainer.nickname.length < 1) return this.getOut()
+    },
     computed: {
       ...mapGetters({
-        pokemons: 'shopPokemons'
-      }),
-      checkoutStatus () {
-        return this.$store.state.cart.lastCheckout
-      },
-      total () {
-        return this.products.reduce((total, p) => {
-          return total + p.price * p.quantity
-        }, 0)
-      }
+        pokemons: 'shopsPokemons',
+        trainer: 'trainerData'
+      })
     },
     methods: {
       ...mapActions([
-        'checkout'
-      ])
+        'buyPokemon'
+      ]),
+      getOut () {
+        this.$router.push('/')
+      }
     }
   }
 </script>
 
 <style>
 
-.cart {
-  width: 600px;
-}
-.checkout-table {
-  width: 100%;
+.shoplist {
+  text-decoration: none;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 356px;
+  width: 105%;
+
 }
 
-.checkout-table th {
-  text-align: left;
-  padding: 15px 0px;
-  border-bottom: 1px solid #aaa;
+.shop h2 {
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 10px 0 15px;
+  color: #3e3ec2;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 23px;
+  border-bottom: 6px solid #d1a90c;
+  border-top: 6px solid #d1a90c;
 }
 
-.checkout-table td {
-  padding: 8px 0px;
+.shoplist span {
+    font-size: .8rem;
 }
 
-.checkout-button {
-  float: right;
-  width: 120px;
-  height: 40px;
-  margin-top: 20px;
+.shoplist span > span {
+    font-size: 1rem;
+    display: flex;
+    margin-top: 5px;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+    width: auto;
 }
 
-.total td {
-  border-top: 1px solid #aaa;
-  padding-top: 10px;
+.shoplist span > span.gender {
+    font: 900 2rem/1rem 'Arial';
 }
+
+.shoplist span > span.nickname {
+    font: 100 1rem 'Arial';
+    font-style: italic;
+}
+
+.shoplist ul {
+    list-style: none;
+    padding: 0;
+}
+
+.shoplist ul li:hover {
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1)
+}
+
+.shoplist ul li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 10px;
+    font-weight: 900;
+    color: #333;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
 </style>

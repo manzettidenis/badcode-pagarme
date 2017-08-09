@@ -3,37 +3,40 @@ import Vue from 'vue'
 
 const state = {
   status: 'firstStep',
-  trainer: {}
+  trainer: {
+    nickname: '',
+    cardNumber: '4024007138010896',
+    cardHolderName: '',
+    cardExpiration: '1224',
+    cardCVV: '144'
+  },
+  model: {}
 }
 
 const actions = {
+
   changeCenario ({commit, state}, val, data) {
-    console.log('chegou changeCenario')
     commit('cenario_has_changed', val)
   },
-  updateTrainer ({commit, state}, ctx) {
-    let trainerModel = {
-      nickname: ctx.nickname,
-      card_number: ctx.cardNumber,
-      card_holder_name: ctx.cardHolderName,
-      card_expiration_date: ctx.cardExpiration,
-      cvv: ctx.CVV
+
+  createTrainer ({commit, state}, ctx) {
+    let url = 'http://localhost:3000/trainer/create'
+    let body = {
+      nickname: state.trainer.nickname,
+      card_number: state.trainer.cardNumber.replace(/[.]/g, ''),
+      card_holder_name: state.trainer.cardHolderName,
+      card_expiration: state.trainer.cardExpiration.replace(/[/]/g, ''),
+      cvv: state.trainer.cardCVV
     }
-    console.log(trainerModel)
-    Vue.http.post('http://localhost:3000/trainer/create', trainerModel)
-    .then((trainer) => {
-      console.log('trainer: ' + trainer)
+    return new Promise((resolve, reject) => {
+      Vue.http.put(url, JSON.stringify(body))
+      .then((trainer) => {
+        commit('trainer_has_update', ctx)
+        commit('cenario_has_changed', 'playGame')
+      }, error => {
+        reject(error)
+      })
     })
-    .catch((err) => {
-      console.log('err: ' + err)
-    })
-    commit('trainer_has_update', ctx)
-  },
-  getStartPokemons ({commit, state}) {
-    // this.$http.get('http://localhost:3000/pokemon/get')
-    // .then((pokemons) => {
-    //   console.log('lista: ' + pokemons)
-    // })
   }
 }
 
@@ -52,9 +55,6 @@ const getters = {
   },
   cenarioStatus (state, getters, rootState) {
     return state.status
-  },
-  getStartPokemons (state, getters, rootState) {
-    return state.freePokemons
   }
 }
 

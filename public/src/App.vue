@@ -85,4 +85,11 @@ body {
   margin-top: 20px;
   font-size: 12px;
 }
+
+
+@media screen and (max-width: 1400px) {
+  .app {
+    width: 824px;
+  }
+}
 </style>

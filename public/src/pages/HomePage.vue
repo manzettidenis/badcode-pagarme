@@ -3,8 +3,8 @@
 
     <form v-if="cenario==='firstStep'" class="registerTrainerForm"
       v-on:submit="changeCenario('secondStep', trainer)">
-        <label >Welcome to Poke Far.me</label>
-        <input required type="text" name="nickname" v-model="trainer.nickname"
+        <h2>Welcome to Poke Far.me</h2>
+        <input masked="false" required type="text" name="nickname" v-model="trainer.nickname"
           placeholder="Your nick">
 
           <div class="buttons">
@@ -15,33 +15,42 @@
     <form v-if="cenario==='secondStep'" id="creditCardForm" class="creditcardForm"
       v-on:submit="changeCenario('thirdStep', trainer)">
 
-        <label>Credit Card Info</label>
-        <input required max="16" type="text" v-mask="'####.####.####.####'"
+        <h2>Credit Card Info</h2>
+        <label>Card Number</label>
+        <input masked="false" required max="16" min="16" type="text" v-mask="'####.####.####.####'"
           v-model="trainer.cardNumber" placeholder="Card Number" value="">
-
-        <input required type="text" v-model="trainer.cardHolderName"
+          <span class="validator" v-bind:class="{ active: trainer.cardNumber.length < 19}">Type a valid card number</span>
+          <label>Card Holder Name:</label>
+        <input masked="false" required type="text" v-model="trainer.cardHolderName"
           placeholder="Card Holder Full Name" value="">
-
-        <input required max="4" type="text" v-mask="'##/##'"
+          <span class="validator" v-bind:class="{ active: trainer.cardHolderName.length < 4}">Type a card holder name</span>
+          <label>Expiration Date:</label>
+        <input masked="false" required max="4" type="text" v-mask="'##/##'"
           v-model="trainer.cardExpiration" placeholder="Card Expiration Date" value="">
-        <input required max="3" type="text" v-mask="'###'"
+          <span class="validator" v-bind:class="{ active: trainer.cardExpiration.length < 5}">Type a valid date</span>
+          <label>CVV:</label>
+        <input masked="false" required max="3" type="text" v-mask="'###'"
           v-model="trainer.cardCVV" placeholder="CVV" value="">
+          <span class="validator" v-bind:class="{ active: trainer.cardCVV.length < 3}">Type a valid CVV Number</span>
 
         <div class="buttons">
-          <button class="button" type="submit">Next</button>
+          <button :disabled="trainer.cardNumber.length<19 && trainer.cardExpiration.length < 5 && trainer.cardCVV.length < 3 &&  trainer.cardHolderName.length < 4" class="button" type="submit">Next</button>
         </div>
     </form>
     <form id="choosePokemon" class="creditcardForm" v-if="cenario==='thirdStep'"
       v-on:submit="startGame('playGame', trainer)">
 
-      <label>Hello {{trainer.nickname}}</label>
-        <select v-model="trainer.pokemon">
-        <option disabled value="">Choose your pokemon</option>
-          <option v-for="p in pokemons" :value="p.name" >{{p.name}}</option>
-      </select>
+      <h2>Hello {{trainer.nickname}}</h2>
+      <span>Please, confirm your data before click register.</span>
+      <ul>
+        <li>Card Number: {{trainer.cardNumber}}</li>
+        <li>Holder: {{trainer.cardHolderName}}</li>
+        <li>Expiration: {{trainer.cardExpiration}}</li>
+        <li>CVV: {{trainer.cardCVV}}</li>
+      </ul>
       <div class="buttons">
-        <button class="button" @click="changeCenario('secondStep', trainer)">Back</button>
-        <button class="button" type="submit">Play</button>
+        <button class="button" v-on:click="getOut()">Abort</button>
+        <button class="button" type="submit">Register</button>
       </div>
     </form>
 </div>
@@ -52,7 +61,6 @@
   export default {
     computed: {
       ...mapGetters({
-        pokemons: 'getStartPokemons',
         trainer: 'trainerData',
         cenario: 'cenarioStatus'
       })
@@ -60,11 +68,14 @@
     methods: {
       ...mapActions({
         changeCenario: 'changeCenario',
-        updateTrainer: 'updateTrainer'
+        createTrainer: 'createTrainer'
       }),
       startGame () {
-        this.updateTrainer(this.trainer)
-        // this.$router.push('/details/1')
+        this.createTrainer(this.trainer)
+        this.$router.push('/shop')
+      },
+      getOut () {
+        return this.changeCenario('firstStep')
       }
     }
   }
@@ -74,6 +85,19 @@
 .home {
 
 }
+button[disabled] {
+  opacity: .3
+}
+.validator {
+  display: none;
+  width: 75%;
+      color: red;
+      padding-bottom: 39px;
+}
+.validator.active{
+    display: flex;
+}
+
 .home form {
     display: flex;
     flex-direction: column;
@@ -82,11 +106,19 @@
     justify-content: flex-start;
     overflow-y: scroll;
     width: 105%;
-    padding: 2% 0%;
     max-height: 410px;
 }
 
-.home form label {
+.home form label{
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #3e3ec2;
+    padding: 0px 0;
+    font-size: 13px;
+    width: 75%;
+    text-align: left;
+}
+.home form h2 {
     font-weight: 900;
     text-transform: uppercase;
     margin: 10px 0 15px;
@@ -107,17 +139,34 @@
     letter-spacing: 1px;
 }
 
+.home form .button:hover {
+  border-width: 0px 0 5px 5px;
+  margin-left: 1px;
+  margin-top: 13px;
+  background: #353599;
+
+}
+.home form .button:active {
+  border-width: 0px 0 3px 3px;
+  margin-left: 0px;
+  margin-top: 15px;
+  background: #212168;
+}
 .home form .button {
-    background: #121266;
-    border: none;
+    background: #212178;
     cursor: pointer;
-    text-align: center;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: #fff;
-    padding: 20px;
-    font-size: 21px;
-    margin-top: 21px;
+        transition: all .2s;
+        border-width: 0px 0 4px 4px;
+        margin-top: 15px;
+        width: auto;
+        padding: 15px 10px;
+        border-radius: 10px;
+        text-transform: uppercase;
+        font-weight: 900;
+        color: #fff;
+        border-style: solid;
+        font-size: 14px;
+        border-color: #0b0b41;
 }
 .home form select {
   height: 150px;

@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import HomePage from '@/pages/HomePage'
 import DetailsPage from '@/pages/DetailsPage'
 import CreatePage from '@/pages/CreatePage'
-import BuyPage from '@/pages/BuyPage'
+import ShopPage from '@/pages/ShopPage'
 
 Vue.use(Router)
 
@@ -15,12 +15,12 @@ export default new Router({
       component: HomePage
     },
     {
-      path: '/buy',
-      name: 'buy',
-      component: BuyPage
+      path: '/shop',
+      name: 'shop',
+      component: ShopPage
     },
     {
-      path: '/details/:id',
+      path: '/details/:where/:id',
       name: 'details',
       component: DetailsPage
     },

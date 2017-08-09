@@ -13,7 +13,7 @@ const Pokemon = (sequelize, DataTypes) => {
 					isNumeric: true
 				}
 			},
-			genre: {
+			gender: {
 				type: DataTypes.STRING,
 				allowNull: false,
 				values: ['male', 'female'],

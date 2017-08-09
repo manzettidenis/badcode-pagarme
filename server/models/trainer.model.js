@@ -3,37 +3,38 @@ module.exports = (sequelize, DataTypes) => {
 		nickname: {
 			type: DataTypes.STRING,
 			allowNull: false,
-			validate: {
-				isAlphanumeric: true
-			}
 		},
-		card_number: {
+		address_street: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		address_number: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		address_zipcode: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		address_state: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		address_city: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		address_neighborhood: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		phone_number: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		phone_ddd: {
 			type: DataTypes.STRING,
 			allowNull: true,
-			validate: {
-				isAlphanumeric: true
-			}
-		},
-		card_holder_name: {
-			type: DataTypes.STRING,
-			allowNull: true,
-			validate: {
-				isAlphanumeric: true
-			}
-		},
-		card_expiration_date: {
-			type: DataTypes.STRING,
-			allowNull: true,
-			validate: {
-				isAlphanumeric: true
-			}
-		},
-		cvv: {
-			type: DataTypes.STRING,
-			allowNull: true,
-			validate: {
-				isAlphanumeric: true
-			}
 		}
 	});
 	return Trainer

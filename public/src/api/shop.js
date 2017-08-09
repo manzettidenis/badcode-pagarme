@@ -1,10 +1,10 @@
 import Vue from 'vue'
 
 const _pokemons = [
-  {'id': 1, 'nickname': 'Selvagem', 'genre': 'male', 'name': 'Pikachu', 'price': 450.00, 'stock': 1, 'level': 1},
-  {'id': 2, 'nickname': 'Selvagem', 'genre': 'female', 'name': 'Squirtle', 'price': 450.00, 'stock': 1, 'level': 1},
-  {'id': 3, 'nickname': 'Selvagem', 'genre': 'male', 'name': 'Bulbassaur', 'price': 450.00, 'stock': 1, 'level': 1},
-  {'id': 4, 'nickname': 'Selvagem', 'genre': 'female', 'name': 'Charmander', 'price': 450.00, 'stock': 1, 'level': 1}
+  {'id': 1, 'nickname': 'Selvagem', 'gender': 'male', 'name': 'Pikachu', 'price': 450.00, 'stock': 1, 'level': 1},
+  {'id': 2, 'nickname': 'Selvagem', 'gender': 'female', 'name': 'Squirtle', 'price': 450.00, 'stock': 1, 'level': 1},
+  {'id': 3, 'nickname': 'Selvagem', 'gender': 'male', 'name': 'Bulbassaur', 'price': 450.00, 'stock': 1, 'level': 1},
+  {'id': 4, 'nickname': 'Selvagem', 'gender': 'female', 'name': 'Charmander', 'price': 450.00, 'stock': 1, 'level': 1}
 ]
 
 export default {

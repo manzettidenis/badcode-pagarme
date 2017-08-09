@@ -1,7 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import VueResource from 'vue-resource'
 import VueTheMask from 'vue-the-mask'
 import App from './App'
 import router from './router'
@@ -10,7 +9,6 @@ import store from './store/index'
 import { sync } from 'vuex-router-sync'
 sync(store, router, resource)
 
-Vue.use(VueResource)
 Vue.use(VueTheMask)
 Vue.config.productionTip = false
 
@@ -21,5 +19,9 @@ new Vue({
   store,
   resource,
   template: '<App/>',
-  components: { App }
+  components: { App },
+  http: {
+    emulateJSON: true,
+    emulateHTTP: true
+  }
 })
