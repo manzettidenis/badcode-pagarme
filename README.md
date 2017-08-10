@@ -15,17 +15,19 @@ Express, Sqlite3, NodeJS >= 7.0.10
 - Rename config and type your application and database settings
 - The encryption_key should be placed on "public/src/store/pokemons.js"
 
-`BASH
+```
 $ npm install
+
 //after
+
 $ npm run dev
-`
+```
 
 
 # Tests
-**Chrome >= 58.04**
+***Chrome >= 58.04***
 ## e2e
-`BASH
-// in /pulbic folder
+```
+// in /public folder
 $ npm run test
-`
+```
