@@ -62,7 +62,6 @@ routes.get('/trainer/get', TrainerCtrl.getAll)
 'server/routes.js'
 
 // Create Trainer
-
 routes.put('/trainer/create', TrainerCtrl.create) 
 
 //	req.body = {
@@ -83,7 +82,6 @@ routes.put('/trainer/create', TrainerCtrl.create)
 'server/route.js'
 
 //Get All Pokemons
-
 routes.get('/pokemon/get', PokemonCtrl.getAll) 
 
 // when resolved, it will return an array of all pokemons
@@ -102,7 +100,6 @@ routes.get('/pokemon/get', PokemonCtrl.getAll)
 'server/routes.js'
 
 // Buy a pokemon
-
 routes.post('/pokemon/buy', PokemonCtrl.buy) 
 
 //	req.body === {
@@ -138,7 +135,6 @@ routes.post('/pokemon/buy', PokemonCtrl.buy)
 'server/routes.js'
 
 // Create a Pokemon
-
 routes.put('/pokemon/create', PokemonCtrl.create) 
 
 
