@@ -1,3 +1,2 @@
 /node_modules
-database.sqlite
-/server/config.js
+./server/config.js

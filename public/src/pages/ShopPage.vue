@@ -12,7 +12,6 @@
               </span>
               <span>Level: <span>{{p.level}}</span></span>
               <span>Price: <span>${{p.price}}</span></span>
-              <span>Stock: <span>{{p.stock}}</span></span>
           </li>
         </router-link>
 

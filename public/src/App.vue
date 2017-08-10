@@ -88,8 +88,47 @@ body {
 
 
 @media screen and (max-width: 1400px) {
+.paymentMessages {
+  height: 130%!important;
+}
+.list {
+    padding-top: 90px;
+    text-decoration: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 356px;
+    width: 106%;
+}
   .app {
     width: 824px;
+  }
+  .home form {
+    font-size: 1.1rem!important;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .home form h2 {
+    font-size: 1.1rem!important;
+  }
+  .home {
+    height: 340px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 105%;
+  }
+  .page {
+    width: 290px;
+    position: absolute;
+    top: 238px;
+    left: 59px;
+    height: 340px;
+  }
+  .header {
+    width: 266px;
+    height: 382px;
+    overflow: hidden;
+    right: 63px;
+    top: 253px;
   }
 }
 </style>

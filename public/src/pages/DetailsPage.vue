@@ -22,14 +22,14 @@
   <div class="paymentMessages" v-bind:class="{show: this.payment !== 'stand-by'}">
     <div v-bind:class="{show: this.payment === 'processing'}">
       <p>
-        Processando pagamento
+        Processing payment
       </p>
     </div>
     <div v-bind:class="{show: this.payment === 'refused' }">
       <p class="refused">
-        Pagamento recusado. Sinto muito.
+        Payment refused.
       </p>
-      <button class="add-button leave" v-on:click="getOutToRegister()">Sair daqui</button>
+      <button class="add-button leave" v-on:click="getOutToRegister()">Leave</button>
     </div>
   </div>
 
