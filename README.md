@@ -1,16 +1,16 @@
-## Welcome to Poke Far.me
-A simple "game" created to be an object of study
+# Welcome to Poke Far.me
+A simple "game" created to be an object of study.
 
 ## Technologies
 **Client**
-Vue2 / Vuex, Webpack, Vou-Router, Nightwatch
+
+Vue2 / Vuex, Webpack, Vou-Router, Nightwatch + Selenium
 
 **Server**
+
 Express, Sqlite3, NodeJS >= 7.0.10
 
-
-
-# Starting application
+## Starting application
 - Rename database.example.sqlite to database.sqlite
 - Rename config and type your application and database settings
 - The encryption_key should be placed on "public/src/store/pokemons.js"
