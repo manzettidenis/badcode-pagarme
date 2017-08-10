@@ -47,7 +47,15 @@ $ npm start
 '/route.js'
 
 //Get All Trainers
-routes.get('/pokemon/get', TrainerCtrl.getAll) 
+routes.get('/trainer/get', TrainerCtrl.getAll) 
+
+// when resolved, it will return an array of all trainers
+//	res.body = [{
+//			id: Integer,
+//			nickname: String
+//		},
+//		...
+//	]
 ```
 
 ```js
@@ -55,18 +63,17 @@ routes.get('/pokemon/get', TrainerCtrl.getAll)
 
 // Create Trainer
 
-// Your put body should be have
+routes.put('/trainer/create', TrainerCtrl.create) 
+
 //	req.body = {
 //			nickname: String // Your trainer's nickname
-//		}
-
-routes.put('/trainer/create', TrainerCtrl.create) 
+//	}
 
 // when resolved, it will return the trainer object
 //	res.body = {
-//			id: Integer,
-//			nickname: String,
-//		}
+//		id: Integer,
+//		nickname: String,
+//	
 ```
 
 
@@ -78,6 +85,7 @@ routes.put('/trainer/create', TrainerCtrl.create)
 //Get All Pokemons
 
 routes.get('/pokemon/get', PokemonCtrl.getAll) 
+
 // when resolved, it will return an array of all pokemons
 //	res.body = [{
 //			id: Integer,
@@ -85,8 +93,8 @@ routes.get('/pokemon/get', PokemonCtrl.getAll)
 //			trainer_id: Integer,
 //			: String,
 //		},
-		...
-	]
+//		...
+//	]
 ```
 
 
@@ -94,6 +102,8 @@ routes.get('/pokemon/get', PokemonCtrl.getAll)
 'server/routes.js'
 
 // Buy a pokemon
+
+routes.post('/pokemon/buy', PokemonCtrl.buy) 
 
 //	req.body === {
 //		pokemon: {
@@ -110,8 +120,6 @@ routes.get('/pokemon/get', PokemonCtrl.getAll)
 //			card_expiration_date: String,
 //			card_cvv: String			
 //	}
-
-routes.post('/pokemon/buy', PokemonCtrl.buy) 
 
 // when resolved, it will return an object of the pokemon
 // res.body = {
@@ -131,6 +139,9 @@ routes.post('/pokemon/buy', PokemonCtrl.buy)
 
 // Create a Pokemon
 
+routes.put('/pokemon/create', PokemonCtrl.create) 
+
+
 //	req.body === {
 //		trainer_id: Integer, // id of trainer whos buying
 //		name: String, // breed of pokemon
@@ -138,8 +149,6 @@ routes.post('/pokemon/buy', PokemonCtrl.buy)
 //		level: 1, // level of the pokemon
 //		price: 450 // price of the pokemon
 //	}
-
-routes.put('/pokemon/create', PokemonCtrl.create) 
 
 // when resolved, it will return an object of the pokemon
 // res.body = {
