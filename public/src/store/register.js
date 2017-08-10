@@ -1,16 +1,18 @@
 // import shop from '@/api/shop'
 import Vue from 'vue'
-
+import pagarme from 'pagarme'
+console.log(pagarme)
 const state = {
   status: 'firstStep',
   trainer: {
+    id: '',
     nickname: '',
-    cardNumber: '4024007138010896',
+    cardNumber: '',
+    cardHash: '',
     cardHolderName: '',
-    cardExpiration: '1224',
-    cardCVV: '144'
-  },
-  model: {}
+    cardExpiration: '',
+    cardCVV: ''
+  }
 }
 
 const actions = {
@@ -31,9 +33,11 @@ const actions = {
     return new Promise((resolve, reject) => {
       Vue.http.put(url, JSON.stringify(body))
       .then((trainer) => {
-        commit('trainer_has_update', ctx)
+        console.log(trainer.body.id)
+        commit('trainer_id_has_update', trainer.body.id)
         commit('cenario_has_changed', 'playGame')
       }, error => {
+        console.log('trainer err')
         reject(error)
       })
     })
@@ -46,6 +50,10 @@ const mutations = {
   },
   trainer_has_update (state, trainer) {
     state.trainer = trainer
+  },
+  trainer_id_has_update (state, id) {
+    console.log(id)
+    state.trainer.id = id
   }
 }
 
@@ -55,6 +63,9 @@ const getters = {
   },
   cenarioStatus (state, getters, rootState) {
     return state.status
+  },
+  itWasRegistered (state, getters, rootState) {
+    return state.trainer
   }
 }
 

@@ -20,7 +20,7 @@ export default new Router({
       component: ShopPage
     },
     {
-      path: '/details/:where/:id',
+      path: '/details/:where/:name/:id',
       name: 'details',
       component: DetailsPage
     },

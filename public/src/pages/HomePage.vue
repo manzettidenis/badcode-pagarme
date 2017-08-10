@@ -1,14 +1,14 @@
 <template>
   <div class="home">
 
-    <form v-if="cenario==='firstStep'" class="registerTrainerForm"
+    <form v-if="cenario==='firstStep'" id="registerTrainerForm"
       v-on:submit="changeCenario('secondStep', trainer)">
         <h2>Welcome to Poke Far.me</h2>
-        <input masked="false" required type="text" name="nickname" v-model="trainer.nickname"
+        <input masked="false" required type="text" v-model="trainer.nickname"
           placeholder="Your nick">
 
           <div class="buttons">
-            <button class="button" type="submit"  name="button">Next</button>
+            <button class="button" type="submit">Next</button>
           </div>
     </form>
 
@@ -18,18 +18,18 @@
         <h2>Credit Card Info</h2>
         <label>Card Number</label>
         <input masked="false" required max="16" min="16" type="text" v-mask="'####.####.####.####'"
-          v-model="trainer.cardNumber" placeholder="Card Number" value="">
+          v-model="trainer.cardNumber" class="cardnumber" placeholder="Card Number" value="">
           <span class="validator" v-bind:class="{ active: trainer.cardNumber.length < 19}">Type a valid card number</span>
           <label>Card Holder Name:</label>
-        <input masked="false" required type="text" v-model="trainer.cardHolderName"
+        <input masked="false" class="cardholder"  required type="text" v-model="trainer.cardHolderName"
           placeholder="Card Holder Full Name" value="">
           <span class="validator" v-bind:class="{ active: trainer.cardHolderName.length < 4}">Type a card holder name</span>
           <label>Expiration Date:</label>
-        <input masked="false" required max="4" type="text" v-mask="'##/##'"
+        <input masked="false" class="cardexpiration" required max="4" type="text" v-mask="'##/##'"
           v-model="trainer.cardExpiration" placeholder="Card Expiration Date" value="">
           <span class="validator" v-bind:class="{ active: trainer.cardExpiration.length < 5}">Type a valid date</span>
           <label>CVV:</label>
-        <input masked="false" required max="3" type="text" v-mask="'###'"
+        <input masked="false" class="cardcvv" required max="3" type="text" v-mask="'###'"
           v-model="trainer.cardCVV" placeholder="CVV" value="">
           <span class="validator" v-bind:class="{ active: trainer.cardCVV.length < 3}">Type a valid CVV Number</span>
 
@@ -53,6 +53,12 @@
         <button class="button" type="submit">Register</button>
       </div>
     </form>
+    <form class="welcome" v-if="cenario==='playGame'">
+      <h2>Welcome Farmer !</h2>
+      <p class="welcomeText">
+        <span>Play is easy.</span><br><br> Buy pokemons and form couples then you will can create pokemons of that specie.
+      </p>
+    </form>
 </div>
 </template>
 
@@ -72,7 +78,6 @@
       }),
       startGame () {
         this.createTrainer(this.trainer)
-        this.$router.push('/shop')
       },
       getOut () {
         return this.changeCenario('firstStep')
@@ -84,6 +89,16 @@
 <style>
 .home {
 
+}
+.welcomeText {
+  padding: 8%;
+  font-size: 1.4rem;
+    color: #333;
+  text-align: center;
+}
+.welcomeText span{
+  font-weight: 900;
+  font-size: 1.8rem;
 }
 button[disabled] {
   opacity: .3

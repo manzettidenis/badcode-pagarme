@@ -19,10 +19,8 @@ db.sequelize = sequelize;
 // Models
 db.trainer = require('./models/trainer.model')(sequelize, Sequelize);
 db.pokemon = require('./models/pokemon.model')(sequelize, Sequelize);
-db.pokedex = require('./models/pokedex.model')(sequelize, Sequelize);
 
 // Relations
-db.pokedex.belongsTo(db.trainer)
-db.pokedex.hasMany(db.pokemon);
+db.trainer.hasMany(db.pokemon);
 
 module.exports = db;

@@ -1,29 +1,57 @@
 <template>
 
-  <div v-bind:class="{ active: cenario==='playGame'}" id="rightScreen">
+  <div v-bind:class="{active: cenario==='playGame'}" id="rightScreen">
   <!-- <div id="rightScreen" class="active"> -->
       <div class="rightNavbar">
           <ul>
               <li v-if="count <= 5">"Poke Hick"</li>
               <li v-if="count > 5 && count <=  15">"Poke Farmer"</li>
               <li v-if="count > 15">"Poke Tycoon"</li>
-              <li>Pokemons: {{count}}</li>
+              <li class="count">Pokemons: <span>{{count}}</span></li>
           </ul>
       </div>
       <div class="list">
           <h2>{{trainer.nickname}}'s Pokemons</h2>
-          <ul v-for="p in pokemons" >
-            <router-link :to="{name: 'details', params: {where:'pokedex',id: p.id}}" class="title">
-              <li>
+          <ul>
+              <li class="pokemonList" v-for="p in pokemons" v-bind:class="{hide: canSeePokemons===false}">
+                <router-link :to="{name: 'details', params: {where:'pokedex', name: p.name, id: p.id}}">
                   <span>{{p.name}} <span class="nickname">{{p.nickname}}</span></span>
                   <span>gender:
                     <span v-if="p.gender==='male'"class="gender">♂</span>
                     <span v-if="p.gender==='female'"class="gender">♀</span>
                   </span>
                   <span>Level: <span>{{p.level}}</span></span>
+                </router-link>
               </li>
-            </router-link>
           </ul>
+          <div v-bind:class="{show: canSeePokemons===false}" class="info">
+            <span>Know more about {{seeAbout}}</span>
+
+            <div v-if="seeAbout === 'Pikachu'" class="">
+              <p>
+                is an Electric-type Pokémon introduced in Generation I.
+                It evolves from Pichu when leveled up with high friendship and evolves into Raichu when exposed to a Thunder Stone. However, the starter Pikachu in Pokémon Yellow will refuse to evolve into Raichu unless it is traded and evolved on another save file.
+              </p>
+            </div>
+            <div v-if="seeAbout === 'Bulbassaur'" class="">
+          <p>
+            is a dual-type Grass/Poison Pokémon introduced in Generation I.
+            It evolves into Ivysaur starting at level 16, which evolves into Venusaur starting at level 32.
+          </p>
+            </div>
+            <div v-if="seeAbout === 'Charmander'" class="">
+            <p>
+              is a Fire-type Pokémon introduced in Generation I.
+              It evolves into Charmeleon starting at level 16, which evolves into Charizard starting at level 36.
+            </p>
+            </div>
+            <div v-if="seeAbout === 'Squirtle'" class="">
+            <p>
+              is a Water-type Pokémon introduced in Generation I.
+                It evolves into Wartortle starting at level 16, which evolves into Blastoise starting at level 36.
+            </p>
+            </div>
+          </div>
       </div>
       <div class="controllers">
         <router-link to="/shop" class="button buyButton" type="button" name="button">Visit Shop</router-link>
@@ -37,7 +65,32 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+  data () {
+    return {
+      canSeePokemons: true,
+      seeAbout: ''
+    }
+  },
   mounted () {
+    console.log('oioio' + ['details'].indexOf(this.$route.name))
+  },
+  watch: {
+    '$route.name': function () {
+      if (this.$route.name === 'details') {
+        this.canSeePokemons = false
+      } else {
+        this.canSeePokemons = true
+      }
+      if (this.$route.params.name === 'Pikachu') {
+        this.seeAbout = 'Pikachu'
+      } else if (this.$route.params.name === 'Squirtle') {
+        this.seeAbout = 'Squirtle'
+      } else if (this.$route.params.name === 'Charmander') {
+        this.seeAbout = 'Charmander'
+      } else if (this.$route.params.name === 'Bulbassaur') {
+        this.seeAbout = 'Bulbassaur'
+      }
+    }
   },
   computed: {
     ...mapGetters({
@@ -60,7 +113,29 @@ export default {
 </script>
 
 <style>
-
+.info {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.hide {
+  display: none!important;
+}
+.show {
+  display: flex!important;
+}
+.info span{
+color: #fc0;
+    text-align: center;
+    font-size: 1.1rem!important;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+.info p {
+color: #fff;
+text-align: center;
+}
 #rightScreen {
   overflow: hidden;
   width: 0px;
@@ -210,12 +285,12 @@ a {text-decoration: none;}
     padding: 0;
 }
 
-.list ul li:hover {
+.list ul li a:hover {
     cursor: pointer;
     background: rgba(255, 255, 255, 0.1)
 }
 
-.list ul li {
+.list ul li a{
     display: flex;
     flex-direction: row;
     align-items: center;

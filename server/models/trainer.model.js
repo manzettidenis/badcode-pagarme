@@ -4,6 +4,14 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
+		card_hash: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		card_cvv: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
 		address_street: {
 			type: DataTypes.STRING,
 			allowNull: true

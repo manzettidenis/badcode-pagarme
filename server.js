@@ -13,11 +13,9 @@ app.use((req, res, next) => {
 	const allowedOrigins = ['http://localhost:8080', 'http://127.0.0.1:8080', 'http://127.0.0.1:4000', 'http://localhost:4000'];
 	const origin = req.headers.origin;
 	if (allowedOrigins.indexOf(origin) > -1) {
-		console.log('bateu no cors')
 		res.setHeader('Access-Control-Allow-Origin', origin);
 		res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
 	} else {
-		console.log('bateu no cors 2')
 		res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
 	}
 	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -27,7 +25,7 @@ app.use((req, res, next) => {
 });
 app.use(bodyParser.json())
 app.use('/', Router)
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public/dist')))
 db.sequelize.sync().then(() => {
 	console.log('all models are sync.')
 	app.listen(Config.application.port, () => {

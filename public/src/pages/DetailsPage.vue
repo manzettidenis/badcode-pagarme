@@ -1,18 +1,38 @@
 <template>
-  <div :on="this" class="product-item">
+  <div v-if="pokemon" class="product-item">
     <router-link to="/shop" class="back-link">BACK</router-link>
-    <div class="image" v-bind:class="renderPokemon(pokemon)"></div>
-    <div class="product-title">{{ pokemon.name }}</div>
-    <div class="product-subtitle">Nickname: <span>{{ pokemon.nickname }}</span></div>
-    <div class="product-subtitle">Level: <span>{{ pokemon.level }}</span></div>
-    <div class="product-subtitle">gender: <span>{{ pokemon.gender }}</span></div>
-    <div class="product-subtitle">Price: <span>${{ pokemon.price }}</span></div>
+    <form v-on:submit="buyPokemon({pokemon:pokemonTemp, trainer:trainer})">
+
+    <div class="image" v-bind:class="renderPokemon(pokemonTemp)"></div>
+    <div class="product-title">{{ pokemonTemp.name }}</div>
+    <div class="product-subtitle">Nickname:
+      <input v-if="$route.params.where === 'shop'" type="text" v-model="pokemonTemp.nickname" placeholder="Choose a nickname" class="pokemonNickname">
+      <span v-if="$route.params.where === 'pokedex'" >{{pokemonTemp.nickname}}</span>
+    </div>
+    <div class="product-subtitle">Level: <span>{{ pokemonTemp.level }}</span></div>
+    <div class="product-subtitle">gender: <span>{{ pokemonTemp.gender }}</span></div>
+    <div class="product-subtitle">Price: <span>${{ pokemonTemp.price }}</span></div>
     <div class="product-details">
-      <div class="inventory">In Stock: {{ pokemon.stock }}</div>
-      <button v-on:click="buyPokemon({pokemon:pokemon, trainer:trainer})" class="add-button" v-if="where === 'shop'">
-        {{ pokemon.stock > 0 ? "Buy Pokemon" : "Out Of Stock" }}
+      <div class="inventory">In Stock: {{ pokemonTemp.stock }}</div>
+      <button v-bind:disabled=" this.buyButton === false" type="submit" class="add-button" v-if="this.$route.params.where === 'shop'">
+        {{ pokemonTemp.stock > 0 ? "Buy Pokemon" : "Out Of Stock" }}
       </button>
     </div>
+  </form>
+  <div class="paymentMessages" v-bind:class="{show: this.payment !== 'stand-by'}">
+    <div v-bind:class="{show: this.payment === 'processing'}">
+      <p>
+        Processando pagamento
+      </p>
+    </div>
+    <div v-bind:class="{show: this.payment === 'refused' }">
+      <p class="refused">
+        Pagamento recusado. Sinto muito.
+      </p>
+      <button class="add-button leave" v-on:click="getOutToRegister()">Sair daqui</button>
+    </div>
+  </div>
+
   </div>
 </template>
 
@@ -21,45 +41,62 @@
   export default {
     data () {
       return {
-        where: this.$route.params.where
+        pokemonTemp: {},
+        buyButton: false
+      }
+    },
+    watch: {
+      isBought: function () {
+        return this.$router.push('/shop')
+      },
+      'pokemonTemp.nickname': function () {
+        if (this.pokemonTemp.nickname.length < 3) {
+          this.buyButton = false
+          return this.buyButton
+        } else {
+          this.buyButton = true
+          return this.buyButton
+        }
       }
     },
     mounted () {
-      if (this.trainer.nickname.length < 1) this.getOut()
+      if (this.trainer.id === '') this.getOut()
+      this.getList()
+      this.paymentStatus = this.payment
+      this.pokemonTemp = this.pokemon
+      this.pokemonTemp.trainerID = this.trainer.id
+      if (this.$route.params.where === 'shop') {
+        this.pokemonTemp.nickname = ''
+      }
     },
     computed: {
       ...mapGetters({
         trainer: 'trainerData',
         shops: 'shopsPokemons',
-        pokemons: 'myPokemons'
-      }),
-      pokemon () {
-        let id = parseInt(this.$route.params.id)
-        if (this.where === 'pokedex') {
-          return this.pokemons.find((p) => p.id === id) || {}
-        } else {
-          return this.shops.find((p) => p.id === id) || {}
-        }
-      }
-    },
-    watch: {
-        pokemon.name: () => {
-          console.log('watcher')
-        }
-      }
-      }
+        pokemon: 'detailsOfPokemon',
+        isBought: 'itsWasBought',
+        payment: 'paymentStatus'
+      })
     },
     methods: {
       ...mapActions([
         'getMyPokemons',
-        'buyPokemon'
+        'buyPokemon',
+        'getDetailPokemons'
       ]),
       renderPokemon (pokemon) {
         return pokemon.name
       },
+      getOutToRegister () {
+        location.reload()
+      },
       getList () {
-        console.log('entrou no getlist')
-      }
+        let data = {
+          id: parseInt(this.$route.params.id),
+          where: this.$route.params.where
+        }
+        this.getDetailPokemons(data)
+      },
       getOut () {
         this.$router.push('/')
       }
@@ -83,6 +120,44 @@
   text-align: center;
   margin: 0 auto;
   font-size: 26px;
+}
+.paymentMessages p {
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+.paymentMessages p.refused {
+  color: red;
+  font-weight: 900;
+}
+.paymentMessages.show {
+  display: flex!important
+}
+.paymentMessages.show div.show {
+  display: flex!important
+}
+
+.paymentMessages div {
+  display: none;
+}
+.paymentMessages div {
+  display: none;
+  width: 100%;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.paymentMessages {
+  display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.62);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
 }
 .product-subtitle {
   padding: 7px 0;

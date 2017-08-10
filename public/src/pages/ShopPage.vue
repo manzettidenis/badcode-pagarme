@@ -3,9 +3,9 @@
   <h2>Welcome to Shop</h2>
   <div class="shoplist">
       <ul v-for="p in pokemons" >
-        <router-link :to="{name: 'details', params: {where:'shop',id: p.id}}" class="title">
+        <router-link :to="{name: 'details', params: {where:'shop', name: p.name, id: p.id}}" class="title">
           <li>
-              <span>{{p.name}} <span class="nickname">{{p.nickname}}</span></span>
+              <span class="name">{{p.name}}</span>
               <span>gender:
                 <span v-if="p.gender==='male'"class="gender">♂</span>
                 <span v-if="p.gender==='female'"class="gender">♀</span>
@@ -15,6 +15,7 @@
               <span>Stock: <span>{{p.stock}}</span></span>
           </li>
         </router-link>
+
       </ul>
   </div>
 </div>
@@ -24,12 +25,18 @@
   import { mapActions, mapGetters } from 'vuex'
   export default {
     mounted () {
-      if (this.trainer.nickname.length < 1) return this.getOut()
+      if (this.trainer.id === '') this.getOut()
+    },
+    watch: {
+      isRegistered: function () {
+        return this.$router.push('/shop')
+      }
     },
     computed: {
       ...mapGetters({
         pokemons: 'shopsPokemons',
-        trainer: 'trainerData'
+        trainer: 'trainerData',
+        isRegistered: 'itWasRegistered'
       })
     },
     methods: {
@@ -68,6 +75,9 @@
 
 .shoplist span {
     font-size: .8rem;
+}
+.shoplist span.name {
+  font-size: 1.1rem
 }
 
 .shoplist span > span {

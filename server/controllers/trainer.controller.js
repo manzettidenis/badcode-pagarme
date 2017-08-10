@@ -7,7 +7,11 @@ const request = require('request-promise'),
 
 TrainerCtrl.getAll = (req, res) => {
 	console.log('Getting all trainers')
-	db.trainer.findAll()
+	db.trainer.findAll({
+			include: [{
+				model: db.pokemon
+			}]
+		})
 		.then((trainers) => {
 			res.send(trainers);
 		})
@@ -31,29 +35,15 @@ TrainerCtrl.get = (req, res) => {
 }
 
 TrainerCtrl.create = (req, res) => {
-	const promise = db.trainer.create(req.body);
-
-	db.trainer.find({
-			where: {
-				nickname: req.body.nickname
-			}
+	console.log(req.body)
+	db.trainer.create(req.body)
+		.then((trainer) => {
+			res.send(trainer)
 		})
-		.then((ctx) => {
-				if(ctx === null) {
-					db.promise.then((trainer) => {
-						res.send(trainer.nickname + 'was created!')
-					})
-					.catch((err) => {
-						console.log(err)
-						return res.send(err.message)
-					})
-				}
-				return res.send(ctx)
-		}).catch((err) => {
+		.catch((err) => {
 			console.log(err)
 			return res.send(err.message)
 		})
-
 };
 
 
