@@ -3,6 +3,7 @@
 const express = require('express'),
 	app = express(),
 	path = require('path'),
+	morgan = require('morgan'),
 	bodyParser = require('body-parser'),
 	Sequelize = require('sequelize'),
 	db = require('./server/database.js'),
@@ -24,6 +25,12 @@ app.use((req, res, next) => {
 	return next();
 });
 app.use(bodyParser.json())
+
+if(process.env.NODE_ENV === 'dev') {
+    //use morgan to log at command line
+    app.use(morgan('tiny'));
+}
+
 app.use('/', Router)
 app.use(express.static(path.join(__dirname, 'public/dist')))
 db.sequelize.sync().then(() => {
