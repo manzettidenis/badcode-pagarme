@@ -19,7 +19,7 @@ Express, Sqlite3, NodeJS >= 7.0.10
 // install all dependencies. Client and Server side.
 npm run install
 
-// or install dependencias manually on '/' and '/public'
+// or install dependencies manually on '/' and '/public'
 $ npm install
 
 //development server
