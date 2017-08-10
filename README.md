@@ -37,6 +37,5 @@ $ npm start
 ***Chrome >= 58.04***
 ## e2e
 ```
-// in /public folder
-$ npm run test
+$ npm run test-client
 ```
