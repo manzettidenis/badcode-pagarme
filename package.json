@@ -7,7 +7,7 @@
     "node": ">=7.0.10"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node test.js",
     "start": "node server.js",
     "dev": "NODE_ENV=dev nodemon server.js",
     "install" : "npm instal && cd /public && npm install"
@@ -17,7 +17,6 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.15.3",
-    "morgan": "^1.8.2",
     "request": "^2.73.0",
     "request-promise": "^4.0.0",
     "sequelize": "^4.4.2",

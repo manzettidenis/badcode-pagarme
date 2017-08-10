@@ -1,19 +1,17 @@
 'use strict';
-
 const Config = () => {
 
   this.configs = {
         logging:false,
         database: {
-          name: 'pokemons',
-          user: 'professorcarvalho',
-          password: null,
+          name: '', // name of database
+          user: '', // user database
+          password: , // password database
         },
         application: {
           ip: 'localhost',
           port: 3000,
-          api_key: 'ak_test_jRaznapwnT2lrrr8KhG32blo15JOyW',
-          enc_key: 'ak_test_jRaznapwnT2lrrr8KhG32blo15JOyW'
+          api_key: '' // your pagar.me api_key
         }
       }
     return this.configs
