@@ -18,8 +18,8 @@ Nightwatch + Selenium
 
 ## Starting application
 - Rename database.example.sqlite to database.sqlite
-- Rename config and type your application and database settings
-- The encryption_key should be placed on "public/src/store/pokemons.js"
+- Rename config.example.jd to config.js and insert your application and database options and settings
+- The encryption_key should be stored on "public/src/store/pokemons.js"
 
 ```console
 // install all dependencies. Client and Server side.
