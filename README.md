@@ -2,13 +2,19 @@
 A simple "game" created to be an object of study.
 
 ## Technologies
-**Client**
 
-Vue2 / Vuex, Webpack, Vou-Router, Nightwatch + Selenium
+**Client:**
+Webpack, Vue2 / Vuex, Vue-Resource, Vue-Router
 
-**Server**
-
+**Server:**
 Express, Sqlite3, NodeJS >= 7.0.10
+
+**Unit tests:**
+Mocha + Chai + Chai-Http
+
+**E2E tests:**
+Nightwatch + Selenium
+
 
 ## Starting application
 - Rename database.example.sqlite to database.sqlite
@@ -22,13 +28,13 @@ npm run install
 // or install dependencies manually on '/' and '/public'
 $ npm install
 
-//development server
+// development server
 $ npm run dev
 
-//build for production
+// build client for production
 $ npm run build
 
-// start server
+// start production server
 $ npm start
 ```
 
@@ -36,46 +42,67 @@ $ npm start
 ### Trainer routes
 
 
-**Get All Trainers**
+
 ```js
 '/route.js'
 
+//Get All Trainers
 routes.get('/pokemon/get', TrainerCtrl.getAll) 
 ```
 
-**Create Trainer**
 ```js
-// /routes.js
+'server/routes.js'
+
+// Create Trainer
+
+// Your put body should be have
+//	req.body = {
+//			nickname: String // Your trainer's nickname
+//		}
 
 routes.put('/trainer/create', TrainerCtrl.create) 
-//	req.body = {
-//			name: String // breed of pokemon
+
+// when resolved, it will return the trainer object
+//	res.body = {
+//			id: Integer,
+//			nickname: String,
 //		}
 ```
 
 
 ### Pokemon routes
 
-
-**Get All Pokemons**
 ```js
 'server/route.js'
 
+//Get All Pokemons
+
 routes.get('/pokemon/get', PokemonCtrl.getAll) 
+// when resolved, it will return an array of all pokemons
+//	res.body = [{
+//			id: Integer,
+//			nickname: String,
+//			trainer_id: Integer,
+//			: String,
+//		},
+		...
+	]
 ```
 
-**Buy a pokemon**
+
 ```js
 'server/routes.js'
 
-routes.post('/pokemon/buy', PokemonCtrl.buy) 
+// Buy a pokemon
+
 //	req.body === {
 //		pokemon: {
 //			trainer_id: Integer, // id of trainer whos buying
-//			name: String, // breed of pokemon
-//			nickname: String, // nickname of pokemon
-//			level: 1, // level of the pokemon
-//			price: 450 // price of the pokemon
+//			name: String, // pokemon's breed
+//			gender: String, //  pokemon's gender
+//			nickname: String, // pokemon's nickname
+//			level: 1, // pokemon's level
+//			price: 450 // pokemon's price
 //		},
 //		card: {
 //			card_hash: String,
@@ -83,13 +110,27 @@ routes.post('/pokemon/buy', PokemonCtrl.buy)
 //			card_expiration_date: String,
 //			card_cvv: String			
 //	}
+
+routes.post('/pokemon/buy', PokemonCtrl.buy) 
+
+// when resolved, it will return an object of the pokemon
+// res.body = {
+//			trainer_id: Integer, // id of trainer whos buying
+//			name: String, // breed of pokemon
+//			gender: String, //  pokemon's gender
+//			nickname: String, // nickname of pokemon
+//			level: 1, // level of the pokemon
+//			price: 450 // price of the pokemon
+// }
+
 ```
 
-**Create a Pokemon**
+
 ```js
 'server/routes.js'
 
-routes.put('/pokemon/create', PokemonCtrl.create) 
+// Create a Pokemon
+
 //	req.body === {
 //		trainer_id: Integer, // id of trainer whos buying
 //		name: String, // breed of pokemon
@@ -98,6 +139,17 @@ routes.put('/pokemon/create', PokemonCtrl.create)
 //		price: 450 // price of the pokemon
 //	}
 
+routes.put('/pokemon/create', PokemonCtrl.create) 
+
+// when resolved, it will return an object of the pokemon
+// res.body = {
+//			trainer_id: Integer, // id of trainer whos buying
+//			name: String, // breed of pokemon
+//			gender: String, //  pokemon's gender
+//			nickname: String, // nickname of pokemon
+//			level: 1, // level of the pokemon
+//			price: 450 // price of the pokemon
+// }
 ```
 
 # Tests
