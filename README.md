@@ -16,11 +16,20 @@ Express, Sqlite3, NodeJS >= 7.0.10
 - The encryption_key should be placed on "public/src/store/pokemons.js"
 
 ```
+// install all dependencies. Client and Server side.
+npm run install
+
+// or install dependencias manually on '/' and '/public'
 $ npm install
 
-//after
-
+//development server
 $ npm run dev
+
+//build for production
+$ npm run build
+
+// start server
+$ npm start
 ```
 
 
