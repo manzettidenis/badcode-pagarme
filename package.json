@@ -8,9 +8,10 @@
   },
   "scripts": {
     "test": "node test.js",
+    "test-client": "cd public/ && npm run test",
     "start": "node server.js",
     "dev": "NODE_ENV=dev nodemon server.js",
-    "install" : "npm instal && cd /public && npm install"
+    "install" : "npm install && cd /public && npm install"
   },
   "author": "",
   "license": "ISC",
