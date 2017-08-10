@@ -6,7 +6,7 @@ const express = require('express'),
 	bodyParser = require('body-parser'),
 	Sequelize = require('sequelize'),
 	db = require('./server/database.js'),
-	Config = require('./server/config'),
+	Config = require('./config/config'),
 	Router = require('./server/routes')
 
 app.use((req, res, next) => {

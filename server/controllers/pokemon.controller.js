@@ -1,6 +1,6 @@
 'use strict'
 
-const config = require('../config'),
+const config = require('../../config/config'),
 	request = require('request-promise'),
 	db = require('../database.js'),
 	PokemonCtrl = {}
