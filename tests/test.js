@@ -22,6 +22,17 @@ beforeEach(done => {
 		})
 })
 
+//Our parent block
+afterEach(done => {
+	models.sequelize.sync({
+			force: true,
+			logging: false
+		})
+		.then(() => {
+			done()
+		})
+})
+
 describe('/GET trainer', () => {
 	it('it should list all trainers', (done) => {
 		chai.request(server)

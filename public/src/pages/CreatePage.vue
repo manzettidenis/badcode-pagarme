@@ -17,7 +17,7 @@
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
-        <button class="button" type="submite">Create</button>
+        <button class="button" type="submit">Create</button>
     </form>
 
 </div>

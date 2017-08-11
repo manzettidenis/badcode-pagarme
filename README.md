@@ -7,7 +7,10 @@ A simple "game" created to be an object of study.
 Webpack, Vue2 / Vuex, Vue-Resource, Vue-Router
 
 **Server:**
-Express, Sqlite3, NodeJS >= 7.0.10
+Express, NodeJS >= 7.0.10
+
+**Database:**
+Sqlite3, Sequelize as ORM
 
 **Unit tests:**
 Mocha + Chai + Chai-Http

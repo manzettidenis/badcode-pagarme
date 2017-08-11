@@ -11,14 +11,14 @@ const state = {
   trainersPokemons: [],
   details: [],
   shopsPokemons: [
-    {'id': 9991, 'nickname': 'Selvagem', 'gender': 'male', 'name': 'Pikachu', 'price': 450.00, 'stock': 10, 'level': 1},
-    {'id': 9992, 'nickname': 'Selvagem', 'gender': 'female', 'name': 'Squirtle', 'price': 450.00, 'stock': 4, 'level': 1},
-    {'id': 9993, 'nickname': 'Selvagem', 'gender': 'male', 'name': 'Bulbassaur', 'price': 450.00, 'stock': 6, 'level': 1},
-    {'id': 9994, 'nickname': 'Selvagem', 'gender': 'female', 'name': 'Charmander', 'price': 450.00, 'stock': 3, 'level': 1},
-    {'id': 9995, 'nickname': 'Selvagem', 'gender': 'male', 'name': 'Charmander', 'price': 450.00, 'stock': 1, 'level': 1},
-    {'id': 9996, 'nickname': 'Selvagem', 'gender': 'female', 'name': 'Bulbassaur', 'price': 450.00, 'stock': 6, 'level': 1},
-    {'id': 9997, 'nickname': 'Selvagem', 'gender': 'male', 'name': 'Squirtle', 'price': 450.00, 'stock': 4, 'level': 1},
-    {'id': 9998, 'nickname': 'Selvagem', 'gender': 'female', 'name': 'Pikachu', 'price': 450.00, 'stock': 10, 'level': 1}
+    {'id': 9991, 'nickname': 'Wild', 'gender': 'male', 'name': 'Pikachu', 'price': 450.00, 'stock': 10, 'level': 1},
+    {'id': 9992, 'nickname': 'Wild', 'gender': 'female', 'name': 'Squirtle', 'price': 450.00, 'stock': 4, 'level': 1},
+    {'id': 9993, 'nickname': 'Wild', 'gender': 'male', 'name': 'Bulbassaur', 'price': 450.00, 'stock': 6, 'level': 1},
+    {'id': 9994, 'nickname': 'Wild', 'gender': 'female', 'name': 'Charmander', 'price': 450.00, 'stock': 3, 'level': 1},
+    {'id': 9995, 'nickname': 'Wild', 'gender': 'male', 'name': 'Charmander', 'price': 450.00, 'stock': 1, 'level': 1},
+    {'id': 9996, 'nickname': 'Wild', 'gender': 'female', 'name': 'Bulbassaur', 'price': 450.00, 'stock': 6, 'level': 1},
+    {'id': 9997, 'nickname': 'Wild', 'gender': 'male', 'name': 'Squirtle', 'price': 450.00, 'stock': 4, 'level': 1},
+    {'id': 9998, 'nickname': 'Wild', 'gender': 'female', 'name': 'Pikachu', 'price': 450.00, 'stock': 10, 'level': 1}
   ]
 }
 
@@ -82,14 +82,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       Vue.http.put(url, JSON.stringify(pokemon))
       .then((ctx) => {
-        if (ctx.body === 'refused' || typeof ctx.body === 'string') {
-          commit('fail_payment')
-          return state.payment.status
-        }
-        commit('pokemon_was_bought', ctx)
-        commit('end_buying')
+        commit('pokemon_was_created', ctx.body)
       }, error => {
-        commit('fail_payment')
         reject(error)
       })
     })
@@ -139,6 +133,20 @@ const mutations = {
   },
 
   pokemon_was_created (state, pokemon) {
+    console.log(pokemon)
+    let pokemonModel = {
+      id: pokemon.id,
+      trainer_id: pokemon.trainer_id,
+      name: pokemon.name,
+      nickname: pokemon.nickname,
+      level: pokemon.level,
+      gender: pokemon.gender,
+      price: 450
+    }
+    state.trainersPokemons.push(pokemonModel)
+    console.log(state.trainersPokemons)
+
+    return state.trainersPokemons
   },
 
   pokemons_details_updated (state, data) {
