@@ -1,26 +1,29 @@
 'use strict'
 
 const config = require('./../config/config'),
-	Sequelize = require('sequelize'),
- 	sequelize = new Sequelize(
-	config.database.name,
-	config.database.user,
-	config.database.password, {
+	Sequelize = require('sequelize')
+
+let options = {
 		dialect: 'sqlite',
-		storage: './config/database.sqlite',
 		logging: false
-	}),
-	db = {};
+	}
+
+let sequelize
+
+if (process.env.NODE_ENV === 'test') {
+	options.storage = './config/test_database.sqlite'
+	sequelize = new Sequelize(
+		config.test_database.name,
+		config.test_database.user,
+		config.test_database.password, options)
+} else {
+	options.storage = './config/database.sqlite'
+	sequelize = new Sequelize(
+		config.database.name,
+		config.database.user,
+		config.database.password, options)
+}
 
 
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
 
-// Models
-db.trainer = require('./models/trainer.model')(sequelize, Sequelize);
-db.pokemon = require('./models/pokemon.model')(sequelize, Sequelize);
-
-// Relations
-db.trainer.hasMany(db.pokemon);
-
-module.exports = db;
+module.exports = [sequelize, Sequelize];

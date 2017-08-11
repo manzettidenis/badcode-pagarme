@@ -3,10 +3,17 @@ const Config = () => {
 
   this.configs = {
         logging:false,
+        // database settings
         database: {
-          name: '', // name of database
-          user: '', // user database
-          password: , // password database
+          name: 'pokemons', // name of database
+          user: null, // user database
+          password: null, // password database
+        },
+        // Test database settings
+        test_database: {
+          name: 'pokemons_test',
+          user: null,
+          password: null,
         },
         application: {
           ip: 'localhost',

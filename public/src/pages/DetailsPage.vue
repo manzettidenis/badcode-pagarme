@@ -14,7 +14,7 @@
     <div class="product-subtitle">Price: <span>${{ pokemonTemp.price }}</span></div>
     <div class="product-details">
       <div class="inventory">In Stock: {{ pokemonTemp.stock }}</div>
-      <button v-bind:disabled=" this.buyButton === false" type="submit" class="add-button" v-if="this.$route.params.where === 'shop'">
+      <button v-bind:disabled=" this.buyButton === false" type="submit" class="add-button buyPokemonButton" v-if="this.$route.params.where === 'shop'">
         {{ pokemonTemp.stock > 0 ? "Buy Pokemon" : "Out Of Stock" }}
       </button>
     </div>

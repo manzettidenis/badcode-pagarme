@@ -25,8 +25,6 @@ const state = {
 const actions = {
   buyPokemon ({commit, state}, data) {
     commit('start_buying')
-    console.log('data')
-    console.log(data)
     commit('start_payment')
     let url = 'http://localhost:3000/pokemon/buy'
     const card = {
@@ -57,17 +55,13 @@ const actions = {
         return new Promise((resolve, reject) => {
           Vue.http.post(url, JSON.stringify(body))
           .then((ctx) => {
-            console.log(ctx.body)
             if (ctx.body === 'refused' || typeof ctx.body === 'string') {
-              console.log('fail_payment')
               commit('fail_payment')
               return state.payment.status
             }
-            console.log('payment accept')
             commit('pokemon_was_bought', ctx)
             commit('end_buying')
           }, error => {
-            console.log('fail_payment')
             commit('fail_payment')
             reject(error)
           })
@@ -76,7 +70,6 @@ const actions = {
   },
 
   createPokemon ({commit, state}, data) {
-    console.log(data)
     let url = 'http://localhost:3000/pokemon/create'
     let pokemon = {
       trainer_id: data.trainer_id,
@@ -89,17 +82,13 @@ const actions = {
     return new Promise((resolve, reject) => {
       Vue.http.put(url, JSON.stringify(pokemon))
       .then((ctx) => {
-        console.log(ctx.body)
         if (ctx.body === 'refused' || typeof ctx.body === 'string') {
-          console.log('fail_payment')
           commit('fail_payment')
           return state.payment.status
         }
-        console.log('payment accept')
         commit('pokemon_was_bought', ctx)
         commit('end_buying')
       }, error => {
-        console.log('fail_payment')
         commit('fail_payment')
         reject(error)
       })

@@ -1,5 +1,7 @@
-module.exports = (sequelize, DataTypes) => {
-	const Trainer = sequelize.define('Trainer', {
+'use strict'
+
+const Trainer = (sequelize, DataTypes) => {
+	return sequelize.define('Trainer', {
 		nickname: {
 			type: DataTypes.STRING,
 			allowNull: false,
@@ -45,5 +47,7 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: true,
 		}
 	});
-	return Trainer
+
 }
+
+module.exports = Trainer

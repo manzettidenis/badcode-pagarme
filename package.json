@@ -1,17 +1,16 @@
 {
   "name": "pokemon",
   "version": "1.0.0",
-  "description": "Example of a really bad code",
+  "description": "Example of a not too bad code",
   "main": "server.js",
   "engines": {
     "node": ">=7.0.10"
   },
   "scripts": {
-    "test": "node test.js",
+    "test": "mocha tests/",
     "test-client": "cd public/ && npm run test",
     "start": "node server.js",
-    "dev": "NODE_ENV=dev nodemon server.js",
-    "install" : "npm install && cd /public && npm install"
+    "dev": "NODE_ENV=dev nodemon server.js"
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +26,8 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^2.0.1",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "nodemon": "^1.11.0",
+    "pagarme": "^3.1.1"
   }
 }

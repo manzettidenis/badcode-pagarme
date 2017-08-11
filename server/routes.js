@@ -4,8 +4,7 @@ const PokemonCtrl = require('./controllers/pokemon.controller'),
 	routes = require('express').Router();
 
 // Trainer Routes
-routes.get('/trainer/getAll', TrainerCtrl.getAll);
-routes.get('/trainer/get', TrainerCtrl.get);
+routes.get('/trainer/get', TrainerCtrl.getAll);
 routes.put('/trainer/create', TrainerCtrl.create);
 
 // Pokemon Routes

@@ -2,17 +2,15 @@
 
 const config = require('../../config/config'),
 	request = require('request-promise'),
-	db = require('../database.js'),
+	db = require('../models/'),
 	PokemonCtrl = {}
 
 PokemonCtrl.getAll = (req, res) => {
-	console.log('Getting all pokemons')
 	db.pokemon.findAll()
 		.then((pokemons) => {
 			res.send(pokemons)
 		})
 		.catch((err) => {
-			console.log(err)
 			return res.send(err.message)
 		})
 }
@@ -20,20 +18,16 @@ PokemonCtrl.getAll = (req, res) => {
 
 
 PokemonCtrl.create = (req, res) => {
-	console.log('creating')
 	db.pokemon.create(req.body)
 		.then((pokemon) => {
-			console.log(pokemon.name + 'was created!')
-			res.send(pokemon.name + 'was created!')
+			res.send(pokemon)
 		})
 		.catch((err) => {
-			console.log(err)
 			return res.send(err.message)
 		})
 };
 
 PokemonCtrl.buy = (req, res) => {
-  console.log(req.body)
   let pokemon = req.body.pokemon
   let data = {
     "api_key": config.application.api_key,
@@ -53,12 +47,9 @@ PokemonCtrl.buy = (req, res) => {
 			body: data
 		})
 		.then((body) => {
-			console.log(body.status)
 				if (body.status == 'paid') {
-					console.log(pokemon.name + ' paid')
 					db.pokemon.create(pokemon)
 						.then((poke) => {
-							console.log(pokemon.trainer_id)
               db.pokemon.findAll({
 								where: {
 									trainer_id: pokemon.trainer_id
@@ -73,11 +64,11 @@ PokemonCtrl.buy = (req, res) => {
               })
 						})
 				} else if (body.status === 'refused') {
-					return res.send(body.status)
+					console.log('enviando bodystatus')
+					res.send(body.status)
         }
 		})
 		.catch((err) => {
-			console.log(err.message)
 			return res.send(err.message)
 		})
 }

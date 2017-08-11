@@ -1,7 +1,7 @@
 'use strict'
 
 const Pokemon = (sequelize, DataTypes) => {
-	return sequelize.define('pokemon', {
+	return sequelize.define('Pokemon', {
 		name: {
 			type: DataTypes.STRING,
 			allowNull: false
@@ -45,9 +45,7 @@ const Pokemon = (sequelize, DataTypes) => {
 			validate: {
 				isAlphanumeric: true
 			}
-		},
-		updated_at: DataTypes.DATE,
-		deleted_at: DataTypes.DATE
+		}
 	})
 }
 module.exports = Pokemon;
